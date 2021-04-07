@@ -11,6 +11,8 @@ using namespace ariel;
 using std::cout;
 using std::endl;
 
+constexpr int TEN = 10, HUNDREND = 100, ZERO = 0, THREE = 3, TWO = 2, ONE = 1;
+
 unsigned int MAX_COL = 0, MAX_ROW = 0, MIN_COL = __INT_MAX__, MIN_ROW = __INT_MAX__;
 
 void Board::post(unsigned int row, unsigned int col, ariel::Direction d, std::string msg){
@@ -54,15 +56,15 @@ void Board::post(unsigned int row, unsigned int col, ariel::Direction d, std::st
 }
 
 std::string Board::read(unsigned int row, unsigned int col, ariel::Direction d, unsigned int len){
-    std::string msg = "";
+    std::string msg;
     if(d == ariel::Direction::Horizontal){
-        for(unsigned int i = 0; i < len; i++){
+        for(unsigned int i = ZERO; i < len; i++){
             msg += mat[row][i + col].c;
         }
         // msg += '\n';
     }
     else{
-        for(unsigned int i = 0; i < len; i++){
+        for(unsigned int i = ZERO; i < len; i++){
             msg += mat[i + row][col].c;
         }
         // msg += '\n';
@@ -71,18 +73,35 @@ std::string Board::read(unsigned int row, unsigned int col, ariel::Direction d, 
 }
 
 void Board::show(){
-    unsigned int row_start=MIN_ROW, row_end=MAX_ROW+3, col_start=MIN_COL, col_end=MAX_COL+3;
-    if(row_start > 2) row_start -= 3;
-    else row_start = 0;
-    if(col_start > 2) col_start -= 3;
-    else col_start = 0;
-    if(row_end - row_start > 100) row_end = row_start + 100;
-    if(col_end - col_start > 100) col_end = col_start + 100;
+    unsigned int row_start=MIN_ROW;
+    unsigned int row_end=MAX_ROW + THREE;
+    unsigned int col_start=MIN_COL;
+    unsigned int col_end=MAX_COL + THREE;
+    if(row_start > TWO){
+        row_start -= THREE;
+    } 
+    else{
+        row_start = ZERO;
+    } 
+    if(col_start > TWO){ 
+        col_start -= THREE;
+    }
+    else{
+        col_start = ZERO;
+    } 
+    if(row_end - row_start > HUNDREND){
+        row_end = row_start + HUNDREND;
+    } 
+    if(col_end - col_start > HUNDREND){
+        col_end = col_start + HUNDREND;
+    } 
     for(unsigned int i = row_start; i <= row_end; i++){
-        if(i < 10)
-            cout << " " << i << ": " << Board::read(i, col_start, ariel::Direction::Horizontal, col_end - col_start + 1) << endl;
-        else
-            cout << i << ": " << Board::read(i, col_start, ariel::Direction::Horizontal, col_end - col_start + 1) << endl;
+        if(i < TEN){
+            cout << " " << i << ": " << Board::read(i, col_start, ariel::Direction::Horizontal, col_end - col_start + ONE) << endl;
+        }
+        else{
+            cout << i << ": " << Board::read(i, col_start, ariel::Direction::Horizontal, col_end - col_start + ONE) << endl;
+        }
     }
             
 }
