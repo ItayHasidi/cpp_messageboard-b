@@ -76,6 +76,8 @@ void Board::show(){
     else row_start = 0;
     if(col_start > 2) col_start -= 3;
     else col_start = 0;
+    if(row_end - row_start > 100) row_end = row_start + 100;
+    if(col_end - col_start > 100) col_end = col_start + 100;
     for(unsigned int i = row_start; i <= row_end; i++){
         if(i < 10)
             cout << " " << i << ": " << Board::read(i, col_start, ariel::Direction::Horizontal, col_end - col_start + 1) << endl;
